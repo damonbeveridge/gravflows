@@ -1,3 +1,7 @@
+# This Fork
+
+The intention of this forked project is to implement the use of real data as the background and also provide an efficient implementation for generating SNR time-series as the final output.
+
 # Master of Data Science Research Project
 
 This repository is for the research work of Daniel Tang (21140852) for work on data engineering and training of flow-based models for gravitational wave parameter estimation.
