@@ -2,6 +2,13 @@
 
 The intention of this forked project is to implement the use of real data as the background and also provide an efficient implementation for generating SNR time-series as the final output.
 
+### Two main tasks:
+* Implement time domain outputs instead of frequency domain
+* Implement use of real noise
+* Add SNR time-series generation
+  * Using SPIIR bank parameters and using the OMF and sampling close chirp masses
+* Implement use of SPIIR/LIGO injection sets (for astrophysical testing)
+
 # Master of Data Science Research Project
 
 This repository is for the research work of Daniel Tang (21140852) for work on data engineering and training of flow-based models for gravitational wave parameter estimation.

@@ -704,7 +704,9 @@ if __name__ == '__main__':
 
     # signal processing
     parser.add_argument('--add_noise', default=False, action="store_true", help="Whether to add frequency noise - if PSDs are provided we add coloured noise, else Gaussian.")
-    parser.add_argument('--gaussian', default=False, action="store_true", help="Whether to generate white gaussian nois when add_noise is True. If False, coloured noise is generated from a PSD.")
+    parser.add_argument('--real-noise', defailt=False, action="store_true", help="Whether to use real detector noise when add_noise is True. If False, Gaussian or coloured noise is generated from a PSD.")
+    parser.add_argument('--frame-cache', dest='frame_cache', type=str, help="Location of real noise frame files to use when adding waveforms to real noise.")
+    parser.add_argument('--gaussian', default=False, action="store_true", help="Whether to generate white gaussian noise when add_noise is True. If False, coloured noise is generated from a PSD.")
     parser.add_argument('--whiten', default=False, action="store_true", help="Whether to whiten the data with the provided PSD before fitting a reduced basis.")
     parser.add_argument('--lowpass', default=False, action="store_true", help="Whether to truncate the frequency domain data below 'f_lower' specified in the static args.")
     parser.add_argument('--distance_scale', default=False, action="store_true", help="Whether to scale the waveform by applying the sampled distance.")

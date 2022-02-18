@@ -91,7 +91,7 @@ def frequency_noise_from_psd(
     n: int=1,
     seed: Optional[int]=None
 ) -> np.ndarray:
-    """ Create noise with a given psd.
+    """ Create frequency domain noise with a given psd.
 
     Return noise coloured with the given psd. The returned noise
     FrequencySeries has the same length and frequency step as the given psd.
@@ -110,7 +110,7 @@ def frequency_noise_from_psd(
     Returns
     --------
     noise : np.ndarray
-        A np.ndarray containing gaussian noise colored by the given psd.
+        A np.ndarray containing frequency domain gaussian noise colored by the given psd.
     """
 
     sigma = 0.5 * (psd / psd.delta_f) ** (0.5)
@@ -132,6 +132,51 @@ def frequency_noise_from_psd(
 
     return noise
 
+def time_noise_from_psd(
+    psd: Union[np.ndarray, FrequencySeries],
+    n: int=1,
+    seed: Optional[int]=None
+) -> np.ndarray:
+    """ Create time domain noise with a given psd.
+
+    Return noise coloured with the given psd. The returned noise
+    TimeSeries has the same length and frequency step as the given psd.
+    Note that if unique noise is desired a unique seed should be provided.
+
+    Parameters
+    ----------
+    psd : FrequencySeries
+        The noise weighting to color the noise.
+    n: int
+        The number of samples to draw (i.e. batch_size).
+    seed : {0, int} or None
+        The seed to generate the noise. If None specified,
+        the seed will not be reset.
+
+    Returns
+    --------
+    noise : np.ndarray
+        A np.ndarray containing time domain gaussian noise colored by the given psd.
+    """
+
+    sigma = 0.5 * (psd / psd.delta_f) ** (0.5)
+    if seed is not None: np.random.seed(seed)
+    sigma = sigma.numpy()
+
+    not_zero = (sigma != 0)
+
+    sigma_red = sigma[not_zero]
+
+    # generate batch of frequency noise
+    size = (n, sigma_red.shape[0])
+    noise_re = np.random.normal(loc=0, scale=sigma_red, size=size)
+    noise_co = np.random.normal(loc=0, scale=sigma_red, size=size)
+    noise_red = noise_re + 1j * noise_co
+
+    noise = np.zeros((n, len(sigma)), dtype=complex_same_precision_as(psd))
+    noise[:, not_zero] = noise_red
+
+    return noise
 
 def load_psd_from_file(
     file: Union[str, os.PathLike],
