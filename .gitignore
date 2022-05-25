@@ -2,9 +2,7 @@
 /data/
 /.ipynb_checkpoints/
 /.idea/
-/PyCBC Waveforms.ipynb
 /gravflows.iml
-/File Structures.ipynb
 gwpe/__pycache__/waveforms.cpython-38.pyc
 gwpe/__pycache__/parameters.cpython-38.pyc
 gwpe/__pycache__/noise.cpython-38.pyc
