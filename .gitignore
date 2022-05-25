@@ -5,3 +5,13 @@
 /PyCBC Waveforms.ipynb
 /gravflows.iml
 /File Structures.ipynb
+/__pycache__/
+/test.npy
+gwpe/__pycache__/waveforms.cpython-38.pyc
+gwpe/__pycache__/parameters.cpython-38.pyc
+gwpe/__pycache__/noise.cpython-38.pyc
+gwpe/__pycache__/filtering.cpython-38.pyc
+gwpe/__pycache__/filter_parameters_sequential.cpython-38.pyc
+gwpe/__pycache__/filter_parameters_old.cpython-38.pyc
+gwpe/__pycache__/filter_parameters.cpython-38.pyc
+gwpe/__pycache__/__init__.cpython-38.pyc
