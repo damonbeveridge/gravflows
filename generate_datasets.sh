@@ -17,9 +17,10 @@ SECONDS=0
 
 # training data set
 python -m gwpe.parameters \
-    -n 10000 \
+    -n 1000 \
     -d "${dataset_dir}/train/" \
     -c gwpe/config_files/intrinsics.ini \
+    -c gwpe/config_files/extrinsics.ini \
     --overwrite \
     --metadata \
     --verbose
@@ -27,7 +28,7 @@ python -m gwpe.parameters \
 
 # validation data set
 python -m gwpe.parameters \
-    -n 1000 \
+    -n 10 \
     -d "${dataset_dir}/validation/" \
     -c gwpe/config_files/intrinsics.ini \
     -c gwpe/config_files/extrinsics.ini \
@@ -37,7 +38,7 @@ python -m gwpe.parameters \
 
 # test data set
 python -m gwpe.parameters \
-    -n 1000 \
+    -n 10 \
     -d "${dataset_dir}/test/" \
     -c gwpe/config_files/intrinsics.ini \
     -c gwpe/config_files/extrinsics.ini \
@@ -85,7 +86,7 @@ python -m gwpe.waveforms \
     -s gwpe/config_files/static_args.ini \
     --psd_dir "${dataset_dir}/train/PSD/" \
     --ref_ifo "H1" \
-    --lowpass \
+    --highpass \
     --whiten \
     --overwrite \
     --verbose \
@@ -103,7 +104,7 @@ python -m gwpe.waveforms \
     --psd_dir "${dataset_dir}/validation/PSD/" \
     --ifos "H1" "L1" \
     --ref_ifo "H1" \
-    --lowpass \
+    --highpass \
     --whiten \
     --overwrite \
     --verbose \
@@ -124,7 +125,7 @@ python -m gwpe.waveforms \
     --ref_ifo "H1" \
     --add_noise \
     --gaussian \
-    --lowpass \
+    --highpass \
     --whiten \
     --overwrite \
     --verbose \

@@ -1,4 +1,19 @@
-### ozstar module loads + virtualenv
+# This Fork
+
+The intention of this forked project is to implement the use of real data as the 
+background and also provide an efficient implementation for generating SNR time-
+series as the final output.
+
+### Main tasks:
+* Implement time domain outputs instead of frequency domain (due to real noise)
+* Edit the batch_project function because it is currently only built for frequency domain. Be sure that it sowkrs for time domain as well or change
+* Implement use of real noise from LIGO datasets on OzStar
+* Add SNR time-series generation
+    * Using SPIIR bank parameters and the OMF and sampling close chirp masses
+* Implement use of SPIIR/LIGO injection sets (for astrophysical testing)
+* Implement 3 (or arbitrary) detectors
+
+## ozstar module loads + virtualenv
 `module load python/3.8.5`
 
 We could replace later `pip install`s with `module load`, e.g.

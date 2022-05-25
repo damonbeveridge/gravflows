@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Optional, Union, Tuple, List, Dict
 from collections import defaultdict
 from datetime import datetime
+
+from pycbc.noise import noise_from_psd
 from tqdm import tqdm
 
 from scipy.signal import tukey
@@ -41,6 +43,9 @@ def get_tukey_window(
     sampling_rate: int=4096,
     roll_off: float=0.4
 ):
+    """
+    ref: github.com/stephengreen/lfi-gw/blob/master/notebooks/GW150914_data.ipynb
+    """
     alpha = 2 * roll_off / window_duration
     length = int(window_duration * sampling_rate)
     return tukey(length, alpha)
@@ -66,11 +71,16 @@ def get_noise_std_from_static_args(static_args):
     
     In the continuum limit in time domain, the standard deviation of white
     noise would at each point go to infinity, hence the delta_t factor.
+
+    ref: https://github.com/stephengreen/lfi-gw/blob/ba09fcf343e5b7388004d208bd8d26080553c692/lfigw/waveform_generator.py#L314
     """
-    tukey_window = get_tukey_window(static_args['sample_length'], static_args['target_sampling_rate'])
-    window_factor = np.sum(tukey_window ** 2)
-    window_factor /= (static_args['sample_length'] * static_args['target_sampling_rate'])
-    return np.sqrt(window_factor) / np.sqrt(4.0 * static_args['delta_f'])
+    if static_args['domain'] in ('frequency',):
+        tukey_window = get_tukey_window(static_args['sample_length'], static_args['target_sampling_rate'])
+        window_factor = np.sum(tukey_window ** 2)
+        window_factor /= (static_args['sample_length'] * static_args['target_sampling_rate'])
+        return np.sqrt(window_factor) / np.sqrt(4.0 * static_args['delta_f'])
+    elif static_args['domain'] in ('time',):
+        return 1.0 / np.sqrt(2.0 * 1.0 / static_args['target_sampling_rate'])
 
 def get_standardization_factor(coefficients: np.ndarray, static_args: Dict[str, float]):
     """ Given a whitened noisy waveform, we want to rescale each component to

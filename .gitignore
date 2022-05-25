@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+/data/
+/.ipynb_checkpoints/
+/.idea/
+/PyCBC Waveforms.ipynb
+/gravflows.iml
+/File Structures.ipynb
